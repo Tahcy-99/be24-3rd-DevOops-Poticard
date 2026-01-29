@@ -6,6 +6,9 @@ import com.poticard.api.common.Controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChatController implements Controller {
     private final ChatService chatService;
 
@@ -15,8 +18,8 @@ public class ChatController implements Controller {
 
     @Override
     public BaseResponse process(HttpServletRequest req, HttpServletResponse resp) {
-        ChatDto.ChatRoomListReadResponse returnDto = null;
 
+        List<ChatDto.ChatRoomListReadResponse> returnDto = new ArrayList<>();
         if(req.getRequestURI().contains("chat") && req.getMethod().equals("GET")) {
             returnDto = chatService.readChatRoomList();
         }

@@ -4,6 +4,8 @@ import com.poticard.api.board.BoardRepository;
 import com.poticard.api.board.model.BoardDto;
 import com.poticard.api.chat.model.ChatDto;
 
+import java.util.List;
+
 public class ChatService {
     private final ChatRepository chatRepository;
 
@@ -11,8 +13,8 @@ public class ChatService {
         this.chatRepository = chatRepository;
     }
 
-    public ChatDto.ChatRoomListReadResponse readChatRoomList() {
-        ChatDto.ChatRoomListReadResponse returnDto = chatRepository.read();
+    public List<ChatDto.ChatRoomListReadResponse> readChatRoomList() {
+        List<ChatDto.ChatRoomListReadResponse> returnDto = chatRepository.read();
 
         return returnDto;
     }

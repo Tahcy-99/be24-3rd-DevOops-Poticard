@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatRepositoryImpl implements ChatRepository {
 
@@ -16,7 +18,8 @@ public class ChatRepositoryImpl implements ChatRepository {
         this.ds = dataSource;
     }
 
-    public ChatDto.ChatRoomListReadResponse read() {
+    public List<ChatDto.ChatRoomListReadResponse> read() {
+        List<ChatDto.ChatRoomListReadResponse> list = new ArrayList<>();
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mariadb://10.10.10.30:3306/test", "root", "qwer1234");
@@ -25,8 +28,8 @@ public class ChatRepositoryImpl implements ChatRepository {
                         "JOIN user AS usr ON cr.guest_user_id = usr.user_id\n" +
                         "JOIN chat_message AS cm ON cr.room_id = cm.room_id;");
 
-                if (rs.next()) {
-                    return new ChatDto.ChatRoomListReadResponse(
+                while (rs.next()) {
+                     list.add(new ChatDto.ChatRoomListReadResponse(
                             rs.getString("avatar"),
                             rs.getLong("roomId"),
                             rs.getString("name"),
@@ -34,14 +37,12 @@ public class ChatRepositoryImpl implements ChatRepository {
                             rs.getString("role"),
                             rs.getLong("unread"),
                             rs.getString("content")
-                    );
+                    ));
                 }
-
+                return list;
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        return null;
     }
 }
