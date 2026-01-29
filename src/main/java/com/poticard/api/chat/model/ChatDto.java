@@ -127,38 +127,34 @@ public class ChatDto {
     }
 
     // 채팅방 불러오기 Response DTO
-    public static class ChatRoomReadResponse {
-        private Integer id;           // 채팅방 ID (또는 유저 ID)
-        private String name;       // 상대방 이름
-        private String company;    // 소속 회사
-        private String role;       // 역할/직무
-        private int unread;        // 읽지 않은 메시지 개수
-        private String content;    // 마지막 메시지 내용
-        private String[] tags; // 관련 태그 리스트
-        private String avatar;     // 프로필 이미지 URL
-        private String intro;
+    public static class ChatRoomListReadResponse {
+        private String avatar;
+        private Long roomId;
+        private String name;
+        private String company;
+        private String role;
+        private Long unread;
+        private String content;
 
-        public ChatRoomReadResponse() {
+        public ChatRoomListReadResponse() {
         }
 
-        public ChatRoomReadResponse(Integer id, String name, String company, String role, int unread, String content, String[] tags, String avatar, String intro) {
-            this.id = id;
+        public ChatRoomListReadResponse(String avatar, Long roomId, String name, String company, String role, Long unread, String content) {
+            this.avatar = avatar;
+            this.roomId = roomId;
             this.name = name;
             this.company = company;
             this.role = role;
             this.unread = unread;
             this.content = content;
-            this.tags = tags;
-            this.avatar = avatar;
-            this.intro = intro;
         }
 
-        public Integer getId() {
-            return id;
+        public Long getRoomId() {
+            return roomId;
         }
 
-        public void setId(Integer id) {
-            this.id = id;
+        public void setRoomId(Long roomId) {
+            this.roomId = roomId;
         }
 
         public String getName() {
@@ -185,11 +181,11 @@ public class ChatDto {
             this.role = role;
         }
 
-        public int getUnread() {
+        public Long getUnread() {
             return unread;
         }
 
-        public void setUnread(int unread) {
+        public void setUnread(Long unread) {
             this.unread = unread;
         }
 
@@ -201,28 +197,12 @@ public class ChatDto {
             this.content = content;
         }
 
-        public String[] getTags() {
-            return tags;
-        }
-
-        public void setTags(String[] tags) {
-            this.tags = tags;
-        }
-
         public String getAvatar() {
             return avatar;
         }
 
         public void setAvatar(String avatar) {
             this.avatar = avatar;
-        }
-
-        public String getIntro() {
-            return intro;
-        }
-
-        public void setIntro(String intro) {
-            this.intro = intro;
         }
     }
 
