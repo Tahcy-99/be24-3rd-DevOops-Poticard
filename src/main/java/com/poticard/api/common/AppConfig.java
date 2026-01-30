@@ -6,7 +6,8 @@ import com.poticard.api.chat.ChatRepository;
 import com.poticard.api.chat.ChatRepositoryImpl;
 import com.poticard.api.chat.ChatService;
 import com.poticard.api.image.*;
-import com.poticard.api.namecard.NamecardController;
+import com.poticard.api.namecard.controller.NamecardCreateController;
+import com.poticard.api.namecard.controller.NamecardSearchController;
 import com.poticard.api.namecard.NamecardRepositoryImpl;
 import com.poticard.api.namecard.NamecardRepository;
 import com.poticard.api.namecard.NamecardService;
@@ -39,11 +40,12 @@ public class AppConfig {
     // 명함 처리 기능
     private final NamecardRepository namecardRepository = new NamecardRepositoryImpl(ds);
     private final NamecardService namecardService = new NamecardService(namecardRepository);
-    private final NamecardController namecardController = new NamecardController(namecardService);
+    private final NamecardSearchController namecardSearchController = new NamecardSearchController(namecardService);
+    private final NamecardCreateController namecardCreateController = new NamecardCreateController(namecardService);
 
 
     public AppConfig() {
-        ds.setJdbcUrl("jdbc:mariadb://10.10.10.100:3306/test");
+        ds.setJdbcUrl("jdbc:mariadb://10.10.10.30:3306/test");
         ds.setUsername("root");
         ds.setPassword("qwer1234");
 
@@ -54,7 +56,8 @@ public class AppConfig {
         controllerMap.put("/chat", chatController);
 
         // 명함 조회 URI 맵핑
-        controllerMap.put("/namecard/search", namecardController);
+        controllerMap.put("/namecard/search", namecardSearchController);
+        controllerMap.put("/namecard/create", namecardCreateController);
 
         // URI 맵핑
         controllerMap.put("/image/upload", imageController);

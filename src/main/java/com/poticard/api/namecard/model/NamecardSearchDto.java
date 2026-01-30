@@ -1,6 +1,6 @@
 package com.poticard.api.namecard.model;
 
-public class NamecardDto {
+public class NamecardSearchDto {
 
     // userId 값만 받는 request Dto
     public static class NamecardReq {

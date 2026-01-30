@@ -1,8 +1,10 @@
 package com.poticard.api.namecard;
 
-import com.poticard.api.namecard.model.NamecardDto;
+import com.poticard.api.namecard.model.NamecardCreateDto;
+import com.poticard.api.namecard.model.NamecardSearchDto;
 
 public interface NamecardRepository {
 
-    public NamecardDto.NamecardRes search(String userId);
+    public NamecardSearchDto.NamecardRes search(String userId);
+    public NamecardCreateDto.Response create(NamecardCreateDto.Register dto);
 }
