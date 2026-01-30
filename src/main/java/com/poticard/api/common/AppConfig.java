@@ -11,7 +11,7 @@ import com.poticard.api.namecard.controller.NamecardSearchController;
 import com.poticard.api.namecard.NamecardRepositoryImpl;
 import com.poticard.api.namecard.NamecardRepository;
 import com.poticard.api.namecard.NamecardService;
-import com.poticard.api.user.UserController;
+import com.poticard.api.user.controller.UserController;
 import com.poticard.api.user.*;
 import com.zaxxer.hikari.HikariDataSource;
 

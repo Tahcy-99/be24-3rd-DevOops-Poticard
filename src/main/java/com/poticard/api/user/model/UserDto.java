@@ -1,40 +1,53 @@
 package com.poticard.api.user.model;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 public class UserDto {
-    private String email;
-    private String name;
-    private String password;
+    public static class LoginReq {
+        private String loginEmail;
+        private String loginPw;
 
-    public UserDto() {
+        public String getLoginEmail() {
+            return loginEmail;
+        }
+
+        public void setLoginEmail(String loginEmail) {
+            this.loginEmail = loginEmail;
+        }
+
+        public String getLoginPw() {
+            return loginPw;
+        }
+
+        public void setLoginPw(String loginPw) {
+            this.loginPw = loginPw;
+        }
+
+        public LoginReq() {
+        }
+
+        public LoginReq(String loginEmail, String loginPw) {
+            this.loginEmail = loginEmail;
+            this.loginPw = loginPw;
+        }
     }
 
-    public UserDto(String email, String name, String password) {
-        this.email = email;
-        this.name = name;
-        this.password = password;
-    }
+    public static class LoginRes {
+        private String jwt;
 
-    public String getEmail() {
-        return email;
-    }
+        public String getJwt() {
+            return jwt;
+        }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+        public void setJwt(String jwt) {
+            this.jwt = jwt;
+        }
 
-    public String getName() {
-        return name;
-    }
+        public LoginRes() {
+        }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+        public LoginRes(String jwt) {
+            this.jwt = jwt;
+        }
     }
 }

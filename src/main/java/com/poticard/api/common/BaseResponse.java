@@ -1,5 +1,7 @@
 package com.poticard.api.common;
 
+import com.poticard.api.user.model.UserDto;
+
 /*
 *   {success: true, code: 1000, message: '아이디 비밀번호를 확인해주세요', result: 실제 응답 객체}
 *
@@ -18,6 +20,9 @@ public class BaseResponse<T> {
     }
 
     public static <T> BaseResponse success(T result) {
+        if (result.getClass() == UserDto.LoginRes.class){
+            return new BaseResponse(true, 20000, "success", result);
+        }
         return new BaseResponse(true, 20000, "success", result);
     }
 
