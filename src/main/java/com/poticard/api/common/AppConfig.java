@@ -28,7 +28,10 @@ public class AppConfig {
     private final BoardService boardService = new BoardService(boardRepository);
     private final BoardController boardController = new BoardController(boardService);
 
-    private final UserController userController = new UserController();
+    // ===== User DI (Board 흐름이랑 동일하게) =====
+    private final UserRepository userRepository = new UserRepositoryImpl(ds);
+    private final UserService userService = new UserService(userRepository);
+    private final UserController userController = new UserController(userService);
 
     private final ChatRepository chatRepository = new ChatRepositoryImpl(ds);
     private final ChatService chatService = new ChatService(chatRepository);
@@ -45,17 +48,9 @@ public class AppConfig {
     private final NamecardSearchController namecardSearchController = new NamecardSearchController(namecardService);
     private final NamecardCreateController namecardCreateController = new NamecardCreateController(namecardService);
 
-
     public AppConfig() {
         ds.setJdbcUrl("jdbc:mariadb://10.10.10.30:3306/test");
-    // ===== User DI (Board 흐름이랑 동일하게) =====
-    private final UserRepository userRepository = new UserRepositoryImpl(ds);
-    private final UserService userService = new UserService(userRepository);
-    private final UserController userController = new UserController(userService);
-
-    public AppConfig() {
         ds.setDriverClassName("org.mariadb.jdbc.Driver");
-        ds.setJdbcUrl("jdbc:mariadb://192.168.230.113:3306/web");
         ds.setUsername("root");
         ds.setPassword("qwer1234");
 
