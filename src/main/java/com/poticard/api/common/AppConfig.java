@@ -2,6 +2,10 @@ package com.poticard.api.common;
 
 import com.poticard.api.board.*;
 import com.poticard.api.image.*;
+import com.poticard.api.namecard.NamecardController;
+import com.poticard.api.namecard.NamecardRepositoryImpl;
+import com.poticard.api.namecard.NamecardRepository;
+import com.poticard.api.namecard.NamecardService;
 import com.poticard.api.user.UserController;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -25,6 +29,11 @@ public class AppConfig {
     private final ImageService imageService = new ImageCloudServiceImpl();
     private final ImageController imageController = new ImageController(imageService);
 
+    // 명함 처리 기능
+    private final NamecardRepository namecardRepository = new NamecardRepositoryImpl(ds);
+    private final NamecardService namecardService = new NamecardService(namecardRepository);
+    private final NamecardController namecardController = new NamecardController(namecardService);
+
 
     public AppConfig() {
         ds.setJdbcUrl("jdbc:mariadb://10.10.10.30:3306/test");
@@ -35,6 +44,9 @@ public class AppConfig {
         controllerMap.put("/board/read", boardController);
         controllerMap.put("/user/signup", userController);
         controllerMap.put("/user/login", userController);
+
+        // 명함 조회 URI 맵핑
+        controllerMap.put("/namecard/search", namecardController);
 
         // URI 맵핑
         controllerMap.put("/image/upload", imageController);

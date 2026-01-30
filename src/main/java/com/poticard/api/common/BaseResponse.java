@@ -18,11 +18,11 @@ public class BaseResponse<T> {
     }
 
     public static <T> BaseResponse success(T result) {
-        return new BaseResponse(true, 1000, "성공", result);
+        return new BaseResponse(true, 20000, "success", result);
     }
 
     public static <T> BaseResponse fail(T result) {
-        return new BaseResponse(false, 4000, "실패", result);
+        return new BaseResponse(false, 40000, "실패", result);
     }
 
 
