@@ -1,6 +1,8 @@
 package com.poticard.api.namecard;
 
-import com.poticard.api.namecard.model.NamecardDto;
+import com.poticard.api.namecard.model.NamecardCreateDto;
+import com.poticard.api.namecard.model.NamecardSearchDto;
+import com.poticard.api.namecard.model.NamecardUpdateDto;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -15,8 +17,9 @@ public class NamecardRepositoryImpl implements NamecardRepository {
         this.ds = dataSource;
     }
 
+    // DB에서 유저 명함을 불러오는 메소드
     @Override
-    public NamecardDto.NamecardRes search(String userId) {
+    public NamecardSearchDto.NamecardRes search(String userId) {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
 
@@ -28,7 +31,7 @@ public class NamecardRepositoryImpl implements NamecardRepository {
                 ResultSet rs = pstmt.executeQuery();
 
                 if (rs.next()) {
-                    return new NamecardDto.NamecardRes(
+                    return new NamecardSearchDto.NamecardRes(
                             rs.getString("userId"),
                             rs.getString("userName"),
                             rs.getString("userEmail"),
@@ -55,4 +58,76 @@ public class NamecardRepositoryImpl implements NamecardRepository {
         return null;
     }
 
+    // 명함 생성하는 메소드 (유저 입력값을 INSERT)
+    @Override
+    public NamecardCreateDto.Response create(NamecardCreateDto.Register dto) {
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            String sql = "INSERT INTO namecard (userId, namecardTitle, layoutType, color, typoFont, cardTexture, logo, qrcode, avatar, keywords)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ? ,? ,?, ?)";
+
+            // DB 연결 객체를 다 사용하고 나면 반납할 수 있도록 수정
+            try (Connection conn = ds.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, Integer.parseInt(dto.getUserId()));
+                pstmt.setString(2, dto.getNamecardTitle());
+                pstmt.setString(3, dto.getLayoutType());
+                pstmt.setString(4, dto.getColor());
+                pstmt.setString(5, dto.getTypoFont());
+                pstmt.setString(6, dto.getCardTexture());
+                pstmt.setBoolean(7, dto.getLogo());
+                pstmt.setBoolean(8, dto.getQrcode());
+                pstmt.setString(9, dto.getAvatar());
+                pstmt.setString(10, dto.getKeywords());
+
+                int affectedRows = pstmt.executeUpdate();
+                NamecardCreateDto.Response responseDto = new NamecardCreateDto.Response(null);
+
+                if (affectedRows > 0) {
+                    responseDto.setSuccess(true);
+                    return responseDto;
+                }
+                responseDto.setSuccess(false);
+                return responseDto;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // 명함 내용 수정하는 메소드
+    @Override
+    public NamecardUpdateDto.Response update(NamecardUpdateDto.Update dto) {
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            String sql = "UPDATE namecard SET namecardTitle=?, layoutType=?, color=?, typoFont=?, cardTexture=?, logo=?, qrcode=?, avatar=?, keywords=? WHERE userId = ?;";
+
+            // DB 연결 객체를 다 사용하고 나면 반납할 수 있도록 수정
+            try (Connection conn = ds.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, dto.getNamecardTitle());
+                pstmt.setString(2, dto.getLayoutType());
+                pstmt.setString(3, dto.getColor());
+                pstmt.setString(4, dto.getTypoFont());
+                pstmt.setString(5, dto.getCardTexture());
+                pstmt.setBoolean(6, dto.getLogo());
+                pstmt.setBoolean(7, dto.getQrcode());
+                pstmt.setString(8, dto.getAvatar());
+                pstmt.setString(9, dto.getKeywords());
+                pstmt.setInt(10, Integer.parseInt(dto.getUserId()));
+
+                int affectedRows = pstmt.executeUpdate();
+                NamecardUpdateDto.Response responseDto = new NamecardUpdateDto.Response(null);
+
+                if (affectedRows > 0) {
+                    responseDto.setSuccess(true);
+                    return responseDto;
+                }
+                responseDto.setSuccess(false);
+                return responseDto;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
