@@ -2,6 +2,7 @@ package com.poticard.api.namecard;
 
 import com.poticard.api.namecard.model.NamecardCreateDto;
 import com.poticard.api.namecard.model.NamecardSearchDto;
+import com.poticard.api.namecard.model.NamecardUpdateDto;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -81,6 +82,42 @@ public class NamecardRepositoryImpl implements NamecardRepository {
 
                 int affectedRows = pstmt.executeUpdate();
                 NamecardCreateDto.Response responseDto = new NamecardCreateDto.Response(null);
+
+                if (affectedRows > 0) {
+                    responseDto.setSuccess(true);
+                    return responseDto;
+                }
+                responseDto.setSuccess(false);
+                return responseDto;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // 명함 내용 수정하는 메소드
+    @Override
+    public NamecardUpdateDto.Response update(NamecardUpdateDto.Update dto) {
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            String sql = "UPDATE namecard SET namecardTitle=?, layoutType=?, color=?, typoFont=?, cardTexture=?, logo=?, qrcode=?, avatar=?, keywords=? WHERE userId = ?;";
+
+            // DB 연결 객체를 다 사용하고 나면 반납할 수 있도록 수정
+            try (Connection conn = ds.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, dto.getNamecardTitle());
+                pstmt.setString(2, dto.getLayoutType());
+                pstmt.setString(3, dto.getColor());
+                pstmt.setString(4, dto.getTypoFont());
+                pstmt.setString(5, dto.getCardTexture());
+                pstmt.setBoolean(6, dto.getLogo());
+                pstmt.setBoolean(7, dto.getQrcode());
+                pstmt.setString(8, dto.getAvatar());
+                pstmt.setString(9, dto.getKeywords());
+                pstmt.setInt(10, Integer.parseInt(dto.getUserId()));
+
+                int affectedRows = pstmt.executeUpdate();
+                NamecardUpdateDto.Response responseDto = new NamecardUpdateDto.Response(null);
 
                 if (affectedRows > 0) {
                     responseDto.setSuccess(true);
