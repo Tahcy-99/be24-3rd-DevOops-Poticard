@@ -43,7 +43,7 @@ public class AppConfig {
 
 
     public AppConfig() {
-        ds.setJdbcUrl("jdbc:mariadb://10.10.10.100:3306/test");
+        ds.setJdbcUrl("jdbc:mariadb://10.10.10.30:3306/test");
         ds.setUsername("root");
         ds.setPassword("qwer1234");
 
