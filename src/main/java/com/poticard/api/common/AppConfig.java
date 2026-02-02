@@ -11,6 +11,7 @@ import com.poticard.api.namecard.controller.NamecardSearchController;
 import com.poticard.api.namecard.NamecardRepositoryImpl;
 import com.poticard.api.namecard.NamecardRepository;
 import com.poticard.api.namecard.NamecardService;
+import com.poticard.api.social.SocialController;
 import com.poticard.api.user.controller.UserController;
 import com.poticard.api.user.*;
 import com.zaxxer.hikari.HikariDataSource;
@@ -27,6 +28,9 @@ public class AppConfig {
     private final BoardRepository boardRepository = new BoardCpRepositoryImpl(ds);
     private final BoardService boardService = new BoardService(boardRepository);
     private final BoardController boardController = new BoardController(boardService);
+
+    // 소셜 로그인
+    private final SocialController socialController = new SocialController();
 
     // ===== User DI (Board 흐름이랑 동일하게) =====
     private final UserRepository userRepository = new UserRepositoryImpl(ds);
@@ -60,6 +64,9 @@ public class AppConfig {
         controllerMap.put("/user/signup", userController);
         controllerMap.put("/user/login", userController);
         controllerMap.put("/chat", chatController);
+
+        // 소셜로그인 등록
+        controllerMap.put("/social/redirect/kakao",socialController);
 
         // 명함 조회 URI 맵핑
         controllerMap.put("/namecard/search", namecardSearchController);
