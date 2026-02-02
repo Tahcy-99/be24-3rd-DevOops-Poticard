@@ -11,6 +11,7 @@ import com.poticard.api.namecard.controller.NamecardSearchController;
 import com.poticard.api.namecard.NamecardRepositoryImpl;
 import com.poticard.api.namecard.NamecardRepository;
 import com.poticard.api.namecard.NamecardService;
+import com.poticard.api.pay.OrderController;
 import com.poticard.api.social.SocialController;
 import com.poticard.api.user.controller.UserController;
 import com.poticard.api.user.*;
@@ -31,6 +32,9 @@ public class AppConfig {
 
     // 소셜 로그인
     private final SocialController socialController = new SocialController();
+
+    // 주문 확인
+    private final OrderController orderController = new OrderController();
 
     // ===== User DI (Board 흐름이랑 동일하게) =====
     private final UserRepository userRepository = new UserRepositoryImpl(ds);
@@ -67,6 +71,9 @@ public class AppConfig {
 
         // 소셜로그인 등록
         controllerMap.put("/social/redirect/kakao",socialController);
+
+        // 결제시스템 등록
+        controllerMap.put("/orders/verify",orderController);
 
         // 명함 조회 URI 맵핑
         controllerMap.put("/namecard/search", namecardSearchController);
