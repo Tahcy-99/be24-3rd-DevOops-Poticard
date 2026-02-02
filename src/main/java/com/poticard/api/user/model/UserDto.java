@@ -50,4 +50,72 @@ public class UserDto {
             this.jwt = jwt;
         }
     }
+
+    public static class SignupReq{
+        private String email;
+        private String password;
+        private String userName;
+        private String userPhone;
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public String getUserPhone() {
+            return userPhone;
+        }
+
+        public void setUserPhone(String userPhone) {
+            this.userPhone = userPhone;
+        }
+
+        public SignupReq() {
+        }
+
+        public SignupReq(String email, String password, String userName, String userPhone) {
+            this.email = email;
+            this.password = password;
+            this.userName = userName;
+            this.userPhone = userPhone;
+        }
+    }
+
+    public static class SignupRes {
+        private String userName;
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public SignupRes() {
+        }
+
+        public SignupRes(String userName) {
+            this.userName = userName;
+        }
+    }
 }
