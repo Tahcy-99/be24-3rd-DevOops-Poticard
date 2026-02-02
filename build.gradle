@@ -17,6 +17,9 @@ dependencies {
     compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.4.1'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.20.1'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    implementation 'io.jsonwebtoken:jjwt-orgjson:0.12.6'
 }
 
 test {
