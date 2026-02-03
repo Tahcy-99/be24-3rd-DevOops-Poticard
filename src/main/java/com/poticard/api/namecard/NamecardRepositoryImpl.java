@@ -1,7 +1,6 @@
 package com.poticard.api.namecard;
 
 import com.poticard.api.namecard.model.NamecardDto;
-import com.poticard.api.namecard.model.NamecardSearchDto;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -18,7 +17,7 @@ public class NamecardRepositoryImpl implements NamecardRepository {
 
     // DB에서 유저 명함을 불러오는 메소드
     @Override
-    public NamecardSearchDto.NamecardRes search(String userId) {
+    public NamecardDto.SearchRes search(String userId) {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
 
@@ -30,7 +29,7 @@ public class NamecardRepositoryImpl implements NamecardRepository {
                 ResultSet rs = pstmt.executeQuery();
 
                 if (rs.next()) {
-                    return new NamecardSearchDto.NamecardRes(
+                    return new NamecardDto.SearchRes(
                             rs.getString("userId"),
                             rs.getString("userName"),
                             rs.getString("userEmail"),

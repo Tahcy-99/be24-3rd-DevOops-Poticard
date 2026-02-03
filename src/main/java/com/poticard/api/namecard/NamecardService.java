@@ -1,7 +1,6 @@
 package com.poticard.api.namecard;
 
 import com.poticard.api.namecard.model.NamecardDto;
-import com.poticard.api.namecard.model.NamecardSearchDto;
 
 public class NamecardService {
     private final NamecardRepository namecardRepository;
@@ -10,7 +9,7 @@ public class NamecardService {
         this.namecardRepository = namecardRepository;
     }
 
-    public NamecardSearchDto.NamecardRes search(String userId) {
+    public NamecardDto.SearchRes search(String userId) {
         return namecardRepository.search(userId);
     }
 

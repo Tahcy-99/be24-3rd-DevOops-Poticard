@@ -4,7 +4,7 @@ package com.poticard.api.namecard.controller;
 import com.poticard.api.common.BaseResponse;
 import com.poticard.api.common.Controller;
 import com.poticard.api.namecard.NamecardService;
-import com.poticard.api.namecard.model.NamecardSearchDto;
+import com.poticard.api.namecard.model.NamecardDto;
 import com.poticard.api.utils.JsonParser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,10 +20,10 @@ public class NamecardSearchController implements Controller {
 
     @Override
     public BaseResponse process(HttpServletRequest req, HttpServletResponse resp) {
-        NamecardSearchDto.NamecardRes responseDto = null;
+        NamecardDto.SearchRes responseDto = null;
 
         if (req.getRequestURI().contains("search") && req.getMethod().equals("POST")) {
-            NamecardSearchDto.NamecardReq dto = JsonParser.from(req, NamecardSearchDto.NamecardReq.class);
+            NamecardDto.SearchReq dto = JsonParser.from(req, NamecardDto.SearchReq.class);
             responseDto = namecardService.search(dto.getUserId());
         }
         else if (req.getRequestURI().contains("search") && req.getMethod().equals("GET")) {
