@@ -1,6 +1,6 @@
 package com.poticard.api.namecard;
 
-import com.poticard.api.namecard.model.NamecardCreateDto;
+import com.poticard.api.namecard.model.NamecardDto;
 import com.poticard.api.namecard.model.NamecardSearchDto;
 
 import javax.sql.DataSource;
@@ -59,7 +59,7 @@ public class NamecardRepositoryImpl implements NamecardRepository {
 
     // 명함 생성하는 메소드 (유저 입력값을 INSERT)
     @Override
-    public NamecardCreateDto.Response create(NamecardCreateDto.Register dto) {
+    public NamecardDto.CreateRes create(NamecardDto.CreateReq dto) {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
 
@@ -80,7 +80,7 @@ public class NamecardRepositoryImpl implements NamecardRepository {
                 pstmt.setString(10, dto.getKeywords());
 
                 int affectedRows = pstmt.executeUpdate();
-                NamecardCreateDto.Response responseDto = new NamecardCreateDto.Response(null);
+                NamecardDto.CreateRes responseDto = new NamecardDto.CreateRes(null);
 
                 if (affectedRows > 0) {
                     responseDto.setSuccess(true);
