@@ -1,5 +1,7 @@
 package com.poticard.api.image;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
@@ -21,15 +23,16 @@ public class ImageCloudServiceImpl implements ImageService{
             .build();
 
     @Override
-    public String upload(Part file) throws IOException {
-        PutObjectRequest req = PutObjectRequest.builder()
-                .bucket("demos3-tahcy")
+    public String upload(HttpServletRequest req) throws IOException, ServletException {
+        Part file = req.getPart("image");
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket("demos3-tahcy") // bucket명 수정 필요
                 .key(file.getSubmittedFileName())
                 .contentType(file.getContentType())
                 .contentLength(file.getSize())
                 .build();
-        s3Client.putObject(req, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+        s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
 
-        return "https://demos3-tahcy.s3.ap-northeast-2.amazonaws.com/"+file.getSubmittedFileName();
+        return "https://demos3-tahcy.s3.ap-northeast-2.amazonaws.com/" + file.getSubmittedFileName();
     }
 }
